@@ -117,6 +117,18 @@ public class TextToolEx4 extends Frame implements WindowListener {
 				 * 2. 읽어온 라인의 왼쪽공백과 오른쪽 공백을 제거한다.(String 클래스의 trim()사용)
 				 * 3. 작업이 끝난 후에 sb에 담긴 내용을 ta에 보여준다.(setText() 사용)
 				 */
+				
+				// 1. Scanner클래스와 반복문을 이용해서 curText를 라인단위로 읽는다.
+				Scanner sc = new Scanner(curText);
+				
+				for (int i = 0; sc.hasNextLine(); i++) {
+					String line = sc.nextLine();
+					
+					// 2. 읽어온 라인의 왼쪽공백과 오른쪽 공백을 제거한다.(String 클래스의 trim()사용)
+					
+				}
+				// 3. 작업이 끝난 후에 sb에 담긴 내용을 ta에 보여준다.(setText() 사용)
+				ta.setText(sb.toString());
 			}
 		});
 		
