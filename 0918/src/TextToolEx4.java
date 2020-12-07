@@ -121,10 +121,12 @@ public class TextToolEx4 extends Frame implements WindowListener {
 				// 1. Scanner클래스와 반복문을 이용해서 curText를 라인단위로 읽는다.
 				Scanner sc = new Scanner(curText);
 				
-				for (int i = 0; sc.hasNextLine(); i++) {
+				for (int i = 0; sc.hasNextLine(); i++) { // trim - 라인의 좌우공백을 제거하는 기능
 					String line = sc.nextLine();
 					
 					// 2. 읽어온 라인의 왼쪽공백과 오른쪽 공백을 제거한다.(String 클래스의 trim()사용)
+					line = line.trim();
+					sb.append(line).append(CR_LF);
 					
 				}
 				// 3. 작업이 끝난 후에 sb에 담긴 내용을 ta에 보여준다.(setText() 사용)
@@ -132,7 +134,7 @@ public class TextToolEx4 extends Frame implements WindowListener {
 			}
 		});
 		
-		btn[n++].addActionListener(new ActionListener() {
+		btn[n++].addActionListener(new ActionListener() { // 빈줄삭제 - 빈 줄 삭제
 			public void actionPerformed(ActionEvent ae) {
 				String curText = ta.getText();
 				StringBuffer sb = new StringBuffer(curText.length());
@@ -142,7 +144,22 @@ public class TextToolEx4 extends Frame implements WindowListener {
 				/*
 				 * 다음의 코드를 완성하세요.
 				 * 1. Scanner클래스와 반복문을 이용해서 curText를 라인단위로 읽는다.
+				 * (Scabber쿨랴수우ㅏ hasNextLine(), nextLine()을 사용)
+				 * 2. 읽어온 라인이 내용이 없는 빈 라인이면 sb에 저장하지 않는다.
+				 * 3. 작업이 끝난 후에 sb에 담긴 내용을 ta에 보여준다.
 				 */
+				// 1. Scanner클래스와 반복문을 이용해서 curText를 라인단위로 읽는다.
+				Scanner sc = new Scanner(curText);
+				
+				for (int i = 0; sc.hasNextLine(); i++) {
+					String line = sc.nextLine();
+					// 2. 읽어온 라인이 내용이 없는 빈 라인이면 sb에 저장하지 않는다.
+					if (line.equals("")) continue;
+					sb.append(line).append(CR_LF);
+					
+				}
+				// 3. 작업이 끝난 후에 sb에 담긴 내용을 ta에 보여준다.
+				ta.setText(sb.toString());
 			}
 		});
 	} // end of registerEventHandler()
