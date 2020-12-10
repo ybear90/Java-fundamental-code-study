@@ -1,12 +1,27 @@
 /*
- * [문제7] TextArea의 각 라인에서 param1에 입력된 문자열과 param2에 입력된 문자열을 찾아서 두 문자열 사이의 텍스트만
- * 남기고 삭제하는 기능의 'substring2'버튼을 구현하세요.
+ * [문제8] TextArea의 라인의 내용중 중복된 것을 제고하고 정렬해서 보여주는 'distinct'버튼을  구현하세요.
  */
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
 
-public class TextToolEx7 extends Frame implements WindowListener {
+public class TextToolEx8 extends Frame implements WindowListener {
 
 	TextArea ta;
 	TextField tfParam1, tfParam2;
@@ -22,6 +37,7 @@ public class TextToolEx7 extends Frame implements WindowListener {
 		"접두사추가",  // Param1과 Param2의 문자열을 각 라인의 앞뒤에 붙이는 기능
 		"substring", // Param1과 Param2에 지정된 문자열을각 라인에서 제거하는 기능
 		"substring2", // Param1과 Param2에 지정된 문자열로 둘러싸인 부분을 남기고 제거하는 기능
+		"distinct",  // 중복값제거한 후 정렬해서 보여주기
 	};
 	
 	Button[] btn = new Button[btnName.length];
@@ -258,46 +274,80 @@ public class TextToolEx7 extends Frame implements WindowListener {
 				
 				prevText = curText;
 				
-				/*
-				 * 다음의 코드를 완성하세요.
-				 * 1. param1과 param2의 값을 가져온다.(getText()사용)
-				 * 2. Scanner클래스와 반복문을 이용해서 curText를 라인단위로 읽는다.
-				 * 3. 각 라인에서 param1, param2과 일치하는 문자열의 위치를 찾는다.
-				 * (param1은 라인의 왼쪽끝부터, param2는 라인의 오른쪽끝부터 찾기 시작한다.)
-				 * param1과 param2로 둘러쌓인 부분을 sb에 저장한다.
-				 * 4. sb의 내용을 TextArea에 보여준다.
-				 */
+				String param1 = tfParam1.getText();
+				String param2 = tfParam2.getText();
 				
-				// 1. param1과 param2의 값을 가져온다.(getText()사용)
-				String prefix = tfParam1.getText();
-				String suffix = tfParam2.getText();
+				Scanner s = new Scanner(curText);
 				
-				Scanner sc = new Scanner(curText);
-				
-				// 2. Scanner클래스와 반복문을 이용해서 curText를 라인단위로 읽는다.
-				for (int i = 0; sc.hasNextLine(); i++) {
-					String line = sc.nextLine();
-					// 3. 각 라인에서 param1, param2과 일치하는 문자열의 위치를 찾는다.
-					// (param1은 라인의 왼쪽끝부터, param2는 라인의 오른쪽끝부터 찾기 시작한다.)
+				for (int i = 0; s.hasNextLine(); i++) {
+					String line = s.nextLine();
 					
-					// 접두사가 있다면
-					if (isExisted(line, prefix) && isNotEmpty(prefix)) {
-						int from = line.indexOf(prefix) + prefix.length();
-						line = line.substring(from);
-					}
+					int from = line.indexOf(param1);
+					int to = line.lastIndexOf(param2);
 					
-					// 접미사가 있다면
-					if (isExisted(line, suffix) && isNotEmpty(suffix)) {
-						int to = line.indexOf(suffix);
-						line = line.substring(0, to);
-					}
-					sb.append(line);
+					from = (from == -1) ? 0 : from + param1.length();
+					to = (to == -1) ? line.length() : to;
+					
+					if (from > to) return;
+					
+					sb.append(line.substring(from, to));
 					sb.append(CR_LF);
 				}
 				
-				// 4. sb의 내용을 TextArea에 보여준다.
 				ta.setText(sb.toString());
 				
+			}
+				
+		});
+		
+		btn[n++].addActionListener(new ActionListener() { // distinct - 중복 라인 제거
+			public void actionPerformed(ActionEvent ae) {
+				String curText = ta.getText();
+				StringBuffer sb = new StringBuffer(curText.length());
+				
+				prevText = curText;
+				
+				/*
+				 *  다음의 코드를 완성하시오
+				 *  1. Scanner 클래스와 반복문을 이용해서 curText를 라인단위로 읽어서 HashSet에 넣는다
+				 *  2. HashSet의 내용을 ArrayList로 옮긴다음 정렬한다.(Collections의 sort() 사용)
+				 *  3. 정렬된 ArrayList의 내용을 sb에 저장한다.
+				 *  4. sb에 저장된 내용을 TextArea에 보여준다.
+				 */
+				// 1. Scanner 클래스와 반복문을 이용해서 curText를 라인단위로 읽어서 HashSet에 넣는다
+				Scanner sc = new Scanner(curText);
+				
+				Set dupDelSet = new HashSet<String>(); // 중복 제거용 Set
+				List lineList = new ArrayList<String>(); // 보여주기용 List
+				
+				for (int i = 0; sc.hasNextLine(); i++) {
+					// 1-2. dupDelSet에 내욛들을 넣는다
+					String line = sc.nextLine();
+					
+					dupDelSet.add(line);
+					
+				}
+				
+				// 2. HashSet의 내용을 ArrayList로 옮긴다음 정렬한다.(Collections의 sort() 사용)
+				Iterator<String> it = dupDelSet.iterator();
+				
+				while (it.hasNext()) {
+					// 2-1. HashSet의 내용을 ArrayList로 옮긴다.
+					lineList.add(it.next());
+				}
+				
+				// 2-2. ArrayList를 정렬한다(Collections.sort() 이용)
+				Collections.sort(lineList);
+				
+				// 3. 정렬된 ArrayList의 내용 sb에 저장한다
+				it = lineList.iterator();
+				
+				while (it.hasNext()) {
+					sb.append(it.next()).append(CR_LF);
+				}
+				
+				// 4. sb에 저장된 내용을 TextArea에 보여준다.
+				ta.setText(sb.toString());
 			}
 		});
 	} // end of registerEventHandler()
@@ -311,11 +361,11 @@ public class TextToolEx7 extends Frame implements WindowListener {
 	}
 
 	public static void main(String[] args) {
-		TextToolEx7 win = new TextToolEx7("Text Tool");
+		TextToolEx8 win = new TextToolEx8("Text Tool");
 		win.show();
 	}
 	
-	public TextToolEx7(String title) {
+	public TextToolEx8(String title) {
 		super(title);
 		lb1 = new Label("param1:", Label.RIGHT);
 		lb2 = new Label("param2:", Label.RIGHT);
