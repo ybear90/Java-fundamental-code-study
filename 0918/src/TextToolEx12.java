@@ -1,5 +1,15 @@
 /*
- * [문제11] TextArea의 데이터를 라인별로 읽어서 param1에 입력된 형식에서 데이터를 뽑아내서 보여주는 '패턴제거'버튼을 구현하세요.
+ * Text Tool예제를 발전시켜서 여러분들이 필요한 기능들을 하나 둘씩 추가하면, 실무에서도 사용하기 편리한 좋은 도구가 될 것 입니다.
+ * 제가 제안하는 몇가지 기능추가사항은 다음과 같습니다.
+ * 먼저 Frame에 option 체크박스를 하나 추가해서 옵션을 체크하고 버튼을 누르면 다른 기능을 하도록 하는 것입니다.
+ * 1. '짝수줄삭제'버튼 - param1에 숫자 n을 입력받아서  n번째 줄을 삭제할 수 있도록 개선 옵션이 체크되어 있으면 n번째 줄만 남기고 모두 삭제
+ * 2. '문자삭제'버튼 -  옵션이 체크되어 있으면, 특정문자만 남기고 삭제
+ * 3. 'substring2'버튼 -옵션이 체크되어 있으면, param1과 param2에 지정된 문자를 제외하고 삭제
+ * 4. 'distinct'버튼 - 옵션이 체크되어 있으면, 내림차순정렬
+ * 5. 'distinct2'버튼 - 옵션이 체크되어 있으면, 내림차순정렬
+ * 6. '클립보드복사'버튼 - TextArea의 내용을 클립보드로 복사하는 기능
+ * 7. 메뉴를 달아서 파일을 열고 저장하는 기능
+ * (201213 기준) 현재 문제만 적고 진행하지 않았음.
  */
 import java.awt.*;
 import java.awt.event.*;
@@ -7,7 +17,7 @@ import java.util.*;
 import java.util.regex.*; // Pattern, Matcher 클래스를 사용하기 위해 추가
 import java.text.*;
 
-public class TextToolEx11 extends Frame implements WindowListener {
+public class TextToolEx12 extends Frame implements WindowListener {
 
 	TextArea ta;
 	TextField tfParam1, tfParam2;
@@ -490,11 +500,11 @@ public class TextToolEx11 extends Frame implements WindowListener {
 	}
 
 	public static void main(String[] args) {
-		TextToolEx11 win = new TextToolEx11("Text Tool");
+		TextToolEx12 win = new TextToolEx12("Text Tool");
 		win.show();
 	}
 	
-	public TextToolEx11(String title) {
+	public TextToolEx12(String title) {
 		super(title);
 		lb1 = new Label("param1:", Label.RIGHT);
 		lb2 = new Label("param2:", Label.RIGHT);
