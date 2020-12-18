@@ -130,7 +130,19 @@ public class MyVector {
 		 * 	(검색순서는 index부터 시작해서 증가하는 방향)
 		 * 3. 못찾으면 -1을 반환한다.
 		 */
-		return 0;
+		// 1. 넘겨받은 객체(obj)가 null이면,
+		// 1.1 반복문을 이용해서 객체배열(data)에서 null인 것을 찾아서 그 위치를 반환한다.
+		if (obj == null) {
+			for (int i = 0; i < data.length; i++) {
+				if (data[i] == null) return i;
+			}
+		} else {
+			for (int i = 0; i < data.length; i++) {
+				if (data[i].equals(obj)) return i;
+			}
+		}
+		
+		return -1;
 	}
 	
 	public int lastIndexOf(Object obj, int index) {
