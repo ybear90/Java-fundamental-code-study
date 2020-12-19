@@ -157,6 +157,23 @@ public class MyVector {
 		 *    (검색순서는 index부터 시작해서, index값을 감소시켜서 객체배열의 0번째까지)
 		 *  4. 못찾으면 -1을 반환한다.
 		 */
-		return 0;
+		 // 1. index의 값이 size보다 같거나 크면, IndexOutOfBoundsException을 발생시킨다.
+		 if (index >= size) {
+			 throw new IndexOutOfBoundsException("유효하지 않은 index입니다: "+index);
+		 } else if (obj == null) { //2. 넘겨받은 객체(obj)가 null 이면,
+			 // 2.1 반복문을 이용해서 객체배열(data)에서 null인 것을 찾아서 그 위치를 반환한다.
+			 // (검색순서는 index부터 시작해서, index값을 감소시켜서 객체배열의 0번째까지)
+			 for (int i = 0; i < data.length; i++) {
+				 if (data[i] == null) return i;
+			 }
+		 } else { // 3. 넘겨받은 객체(obj)가 null이 아닌 경우에는
+			 // 3.1 equals를 이용해서 같은 객체가 있는지 찾아서 그 위치를 반환한다.
+			 // (검색순서는 index부터 시작해서, index값을 감소시켜서 객체배열의 0번째까지)
+			 for (int i = index; i < data.length; i++) {
+				 if (data[i].equals(obj)) return i;
+			 }
+		 }
+		
+		return -1;
 	}
 }
