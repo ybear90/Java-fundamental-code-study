@@ -80,13 +80,16 @@ public class MyVector {
 	public boolean add(Object obj) {
 		// 새로운 객체를 저장하기 전에 저장할 공간을 확보한 후에 객체를 추가.
 		// 객체의 갯수와 capacity 가 같다면 -> setCapacity를 사용해서 늘린다
-		if (size == capacity) {
-			if (capacity == 0) {
-				setCapacity(size+1);
-			} else {
-				setCapacity(size*2);
-			}
-		}
+		//if (size == capacity) {
+		//	if (capacity == 0) {
+		//		setCapacity(size+1);
+		//	} else {
+		//		setCapacity(size*2);
+		//	}
+		//}
+		
+		// Q4. ans
+		ensureCapacity(size+1);
 		
 		data[size++] = obj;
 		
@@ -215,12 +218,68 @@ public class MyVector {
 		if (index > size) throw new ArrayIndexOutOfBoundsException("유효하지 않은 index입니다: "+index);
 		
 		// 2. ensureCapacity()를 호출해서 새로운 객체가 저장될 공간을 확보한다.
-		ensureCapacity();
+		ensureCapacity(size+1);
 		
-		// 3. 객체배열에서 index위치의 객체와 이후의 객체들을 한칸씩 옆으로 이동한다.
+		// 3. 객체배열에서 index위치의 객체와 이후의 객체들을 한칸씩 옆으로 이동한다. (System.arraycopy()사용)
+		System.arraycopy(data, index, data, index+1, data.length-index);
 		
 		// 4. 객체배열의 index위치에 새로운 객체(obj)를 저장한다.
+		data[index] = obj;
 		
 		// 5. size의 값을 1 증가시킨다.
+		size++;
+	}
+	
+	// Q4.
+	public Object remove(int index) {
+		Object oldObj = null;
+		
+		/*
+		 *  다음의 코드를 완성하시오
+		 *  
+		 *  1. index가 배열의 범위를 벗어나는지 체크하고, 벗어나면 IndexOutOfBoundsException를 발생시킨다.
+		 *  2. 삭제하고자하는 데이터를 oldObj에 저장한다.
+		 *  3. 삭제하고자 하는 객체가 마지막 객체가 아니라면, 배열복사를 통해 빈자리를 채워준다.
+		 *  4. 마지막 데이터를 null로 한다. 배열은 0부터 시작하므로 마지막 요소는 index가 size-1이다.
+		 *  5. size의 값을 1 감소시킨다.
+		 *  6. oldObj를 반환한다.
+		 */
+		// 1. index가 배열의 범위를 벗어나는지 체크하고, 벗어나면 IndexOutOfBoundsException를 발생시킨다.
+		if (index >= size) throw new IndexOutOfBoundsException("유효하지 않은 index입니다: "+index);
+		// 2. 삭제하고자하는 데이터를 oldObj에 저장한다.
+		oldObj = data[index];
+		// 3. 삭제하고자 하는 객체가 마지막 객체가 아니라면, 배열복사를 통해 빈자리를 채워준다.
+		System.arraycopy(data, index+1, data, index, data.length-index-1);
+		
+		// 4. 마지막 데이터를 null로 한다. 배열은 0부터 시작하므로 마지막 요소는 index가 size-1이다.
+		data[--size] = null;
+		
+		return oldObj;
+	}
+	
+	// Q4.
+	public boolean remove(Object obj) {
+		/*
+		 *  다음의 코드를 완성하세오.
+		 *  
+		 *  1. 반복문을 이용해서 객체배열의 모든 요소와 obj가 일치하는지 확인한다.
+		 *  	1.1 일치하면 remove(int index)를 호출해서 삭제하고 true를 반환한다.
+		 *  	1.2 일치하는 것을 찾지 못하면, false를 반환한다.
+		 */
+		// 1. 반복문을 이용해서 객체배열의 모든 요소와 obj가 일치하는지 확인한다.
+		for (int i = 0; i < size; i++) {
+			// 1.1 일치하면 remove(int index)를 호출해서 삭제하고 true를 반환한다.
+			if (data[i].equals(obj)) {
+				remove(i);
+				return true;
+			}
+		}
+		// 1.2 일치하는 것을 찾지 못하면, false를 반환한다.
+		return false;
+	}
+	
+	// Q4.
+	public void clear() {
+		
 	}
 }
