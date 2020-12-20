@@ -133,11 +133,11 @@ public class MyVector {
 		// 1. 넘겨받은 객체(obj)가 null이면,
 		// 1.1 반복문을 이용해서 객체배열(data)에서 null인 것을 찾아서 그 위치를 반환한다.
 		if (obj == null) {
-			for (int i = 0; i < data.length; i++) {
+			for (int i = index; i < size; i++) {
 				if (data[i] == null) return i;
 			}
 		} else {
-			for (int i = 0; i < data.length; i++) {
+			for (int i = index; i < size; i++) {
 				if (data[i].equals(obj)) return i;
 			}
 		}
@@ -145,6 +145,7 @@ public class MyVector {
 		return -1;
 	}
 	
+	// Q3.
 	public int lastIndexOf(Object obj, int index) {
 		/*
 		 *  다음의 코드를 완성하시오.
@@ -163,17 +164,63 @@ public class MyVector {
 		 } else if (obj == null) { //2. 넘겨받은 객체(obj)가 null 이면,
 			 // 2.1 반복문을 이용해서 객체배열(data)에서 null인 것을 찾아서 그 위치를 반환한다.
 			 // (검색순서는 index부터 시작해서, index값을 감소시켜서 객체배열의 0번째까지)
-			 for (int i = 0; i < data.length; i++) {
+			 for (int i = index; i >=0 ; i--) {
 				 if (data[i] == null) return i;
 			 }
 		 } else { // 3. 넘겨받은 객체(obj)가 null이 아닌 경우에는
 			 // 3.1 equals를 이용해서 같은 객체가 있는지 찾아서 그 위치를 반환한다.
 			 // (검색순서는 index부터 시작해서, index값을 감소시켜서 객체배열의 0번째까지)
-			 for (int i = index; i < data.length; i++) {
+			 for (int i = index; i >=0; i--) {
 				 if (data[i].equals(obj)) return i;
 			 }
 		 }
 		
 		return -1;
+	}
+	
+	// Q3.
+	public boolean contains(Object obj) {
+		/*
+		 * 코드를완성하세요. indexOf(Object obj, int index)를 사용
+		 */
+		// return indexOf(obj) != -1;
+		return indexOf(obj) >= 0;
+	}
+	
+	// Q3.
+	public int indexOf(Object obj) {
+		return indexOf(obj, 0);
+	}
+	
+	// Q3.
+	public int lastIndexOf(Object obj) {
+		//return lastIndexOf(obj, data.length - 1);
+		return lastIndexOf(obj, size-1);
+	}
+	
+	// Q4.
+	public void add(int index, Object obj) {
+		/*
+		 * 다음의 코드를 완성하세요.
+		 * 
+		 * 1. index의 값이 size보다 크면, ArrayIndexOutOfBoundsException
+		 * 2. ensureCapacity()를 호출해서 새로운 객체가 저장될 공간을 확보한다.
+		 * 3. 객체배열에서 index위치의 객체와 이후의 객체들을 한칸씩 옆으로 이동한다. 
+		 *   (System.arraycopy()사용)
+		 * 4. 객체배열의 index위치에 새로운 객체(obj)를 저장한다.
+		 * 5. size의 값을 1 증가시킨다.
+		 * 
+		 */
+		// 1. index의 값이 size보다 크면, ArrayIndexOutOfBoundsException
+		if (index > size) throw new ArrayIndexOutOfBoundsException("유효하지 않은 index입니다: "+index);
+		
+		// 2. ensureCapacity()를 호출해서 새로운 객체가 저장될 공간을 확보한다.
+		ensureCapacity();
+		
+		// 3. 객체배열에서 index위치의 객체와 이후의 객체들을 한칸씩 옆으로 이동한다.
+		
+		// 4. 객체배열의 index위치에 새로운 객체(obj)를 저장한다.
+		
+		// 5. size의 값을 1 증가시킨다.
 	}
 }
