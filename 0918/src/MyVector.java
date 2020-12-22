@@ -221,7 +221,7 @@ public class MyVector {
 		ensureCapacity(size+1);
 		
 		// 3. 객체배열에서 index위치의 객체와 이후의 객체들을 한칸씩 옆으로 이동한다. (System.arraycopy()사용)
-		System.arraycopy(data, index, data, index+1, data.length-index);
+		System.arraycopy(data, index, data, index+1, size-index);
 		
 		// 4. 객체배열의 index위치에 새로운 객체(obj)를 저장한다.
 		data[index] = obj;
@@ -280,6 +280,37 @@ public class MyVector {
 	
 	// Q4.
 	public void clear() {
+		// 코드를 완성하세요.
+		// 객체배열을 비운다
+		for (int i = 0; i < size; i++) remove(i);
+	}
+	
+	// Q4.
+	public Object[] toArray() {
+		// 객체배열을 복사해서 반환한다.
+		Object[] copyArr = new Object[size];
 		
+		System.arraycopy(data, 0, copyArr, 0, size);		
+		
+		return copyArr;
+	}
+	
+	// Q4.
+	public String toString() {
+		// 객체배열에 저장된 모든 객체를 출력한다.(모든 객체의 toString()을 호출한다.)
+		StringBuffer results = new StringBuffer();
+		results.append("[");
+		
+		for (int i = 0; i < size; i++) {
+			if (i != 0) {
+				results.append(",").append(data[i]);
+			} else {
+				results.append(data[i]);
+			}
+		}
+		
+		results.append("]");
+		
+		return results.toString();
 	}
 }
