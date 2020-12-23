@@ -310,7 +310,7 @@ public class MyVector {
 			//	results.append(data[i]);
 			//}
 			// Q4. ans.
-			if (i == 0) results.append(",");
+			if (i != 0) results.append(",");
 			results.append(get(i).toString());
 		}
 		
@@ -330,16 +330,24 @@ public class MyVector {
 	private class Itr implements Iterator {
 		int cursor = 0; // 읽어올 요소의 위치(index)
 		int lastRet = -1;
+		
 		public Object next() {
 			/*
 			 *  다음의 코드를 완성하시오.
 			 *  1. cursor가 가리키고 있는 위치(index)의 객체를 꺼내온다.(get() 사용)
 			 *  2. cursor의 값을 lastRet에 저장하고 cursor의 값을 1 증가시킨다.
 			 *  (에를 들어, cursor의 값이 1 이었으면 lastRet의 값은 1이 되고, cursor의 값은 2가 된다.)
-			 *  3. 1에서 꺼내온 객체를 반환한다
-			 *  
+			 *  3. 1에서 꺼내온 객체를 반환한다  
 			 */
-			return null;
+			
+			// 1. cursor가 가리키고 있는 위치(index)의 객체를 꺼내온다.(get() 사용)
+			Object result = get(cursor);
+			
+			// 2. cursor의 값을 lastRet에 저장하고 cursor의 값을 1 증가시킨다.
+			lastRet = cursor++;
+			
+			// 3. 1에서 꺼내온 객체를 반환한다
+			return result;
 		}
 		
 		public boolean hasNext() {
@@ -348,7 +356,7 @@ public class MyVector {
 			 *  hint : cursor의 값이 객체배열의 마지막요소의 위치(index)에 다다랐는지 확인한다.
 			 */
 			
-			return false;
+			return cursor < size;
 		}
 		
 		public void remove() {
@@ -361,8 +369,21 @@ public class MyVector {
 			 *  (현재 cursor의 위치보다 이전의 값이 삭제되면 cursor의 위치도 변경되어야 하므로)
 			 *  4. lastRet에 -1을 저장한다.(직전에 읽어온 객체가 삭제 되었으므로)
 			 */
+			// 1. lastRet의 값이 -1이면(직전에 읽어온 객체가 없거나 삭제 되었으면) IllegalStateException을 발생시킨다.
+			if (lastRet == -1) throw new IllegalStateException("유효하지 않은 lastRet 값입니다:"+lastRet);
+			
+			// 2. 직전에 읽어온 객체를 객체배열에서 제거한다.(MyVector의 remove() 사용)
+			//new MyVector().remove(lastRet);
+			MyVector.this.remove(lastRet);
+			
+			// 3. lastRet의 값이 cursor의 값보다 작으면 cursor의 값을 1 감소 시킨다.
+			if (lastRet < cursor) cursor--;
+			
+			// 4. lastRet에 -1을 저장한다.(직전에 읽어온 객체가 삭제 되었으므로)
+			lastRet = -1;
 		}
 		
 	} // private class Itr
+
 	
 } // class MyVector
