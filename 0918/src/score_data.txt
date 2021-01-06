@@ -1,10 +1,44 @@
-남궁성,3,2,100,100,100
-왕자바,3,1,90,100,80
-자바왕,3,3,70,100,100
-킹왕짱,1,2,100,60,90
-자바짱,1,1,100,100,100
-최고수,1,3,100,80,60
-홍길동,2,1,50,80,100
-일지매,2,3,70,80,100
-변강쇠,2,4,80,80,85
-이원구,2,2,90,90,90
+create USER 스크립트
+DB 테이블 생성 스크립트
+별첨. 임시회원 가입용 테이블 생성 스크립트
+
+1. system 계정으로 로그인,
+
+2. [ 0.oracleCreateUser.sql ] 실행 후 로그아웃
+
+unizMgr 계정으로 로그인 (비번은 0. 유저생성 스크립트에 있음)
+
+[ 1.unizTableCreate.sql ] 실행
+
+필요한 경우 [ 1-1.unizTempUserTableCreate.sql ] 임시회원 가입용 테이블 스크립트 실행
+[ 2. unizTableDataInsert.sql] 실행
+
+테이블 날리고 싶을때 방법
+
+방법 1. system 계정으로 로그인 해서 다음 쿼리 실행
+- drop user unizMgr cascade;
+- drop user unizService cascade;
+- 0. 유저생성 스크립트를 다시 실행
+
+방법 2. unizMgr 계정으로 로그인 한 상태에서 다음 쿼리를 실행
+
+시퀀스 삭제 :
+Begin
+for c in (SELECT * FROM all_sequences WHERE SEQUENCE_OWNER='UNIZMGR') loop
+execute immediate 'drop SEQUENCE '||c.sequence_name;
+end loop;
+End;
+
+테이블 삭제 :
+Begin
+for c in (select table_name from user_tables) loop
+execute immediate 'drop table "'||c.table_name||'" cascade constraints';
+end loop;
+End;
+
+트리거 삭제
+Begin
+for c in (SELECT * FROM all_triggers WHERE OWNER='UNIZMGR') loop
+execute immediate 'drop TRIGGER '||c.trigger_name;
+end loop;
+End;

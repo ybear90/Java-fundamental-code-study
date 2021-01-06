@@ -31,7 +31,7 @@ public class BingoEx1 extends Frame {
 		btnArr = new Button[SIZE*SIZE];
 		
 		// Frame에 버튼을 추가한다.
-		for (int i = 0; i < SIZE * SIZE; i++) {
+		for (int i = 0; i < SIZE * SIZE; i++) { 
 			btnArr[i] = new Button(i+1+"");
 			add(btnArr[i]);
 			btnArr[i].addActionListener(handler);
@@ -46,6 +46,30 @@ public class BingoEx1 extends Frame {
 		 * 코드를 완성하시오
 		 * 배열 bArr의 내용을 실행결과와 같은 형식으로 출력하세요.
 		 */
+		System.out.println(bingoCnt);
+		
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				String result = bArr[i][j] ? "O" : "X";
+				System.out.print(result);
+			}System.out.println();
+		}
+	}
+	
+	boolean checkBingo() { // 빙고가 완성되었는지를 확인한다.
+		bingoCnt = 0;
+		int garoCnt = 0; // 가로줄의 0의 개수
+		int seroCnt = 0; // 세로줄의 0의 개수
+		int crossCnt1 = 0; // 대걱선의 0의 개수
+		int crossCnt2 = 0; // 역대각선의 0의 개수
+		/*
+		 *  다음의 코드를 완성하시오
+		 *  
+		 *  1. 이중 반복문을 이용해서 배열 bArr의 값을 체크한다.
+		 *  2. 완성된 라인의 수를 세어서 SIZE의 개수보다 크고나 같으면 true를 그렇지 않으면 false를 반환한다
+		 */
+		
+		return false;
 	}
 	
 	public static void main(String[] args) {

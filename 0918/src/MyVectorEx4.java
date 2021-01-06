@@ -39,6 +39,8 @@ public class MyVectorEx4 {
 		System.out.println("capacity:"+v.capacity());
 		System.out.println("isEmpty:"+v.isEmpty());
 		System.out.println();
+
+		
 		
 		v.clear();
 		System.out.println(v);
