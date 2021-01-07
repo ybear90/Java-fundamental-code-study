@@ -68,6 +68,12 @@ public class BingoEx1 extends Frame {
 		 *  1. 이중 반복문을 이용해서 배열 bArr의 값을 체크한다.
 		 *  2. 완성된 라인의 수를 세어서 SIZE의 개수보다 크고나 같으면 true를 그렇지 않으면 false를 반환한다
 		 */
+		// 1. 이중 반복문을 이용해서 배열 bArr의 값을 체크한다.
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				
+			}
+		}
 		
 		return false;
 	}
