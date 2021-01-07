@@ -69,13 +69,35 @@ public class BingoEx1 extends Frame {
 		 *  2. 완성된 라인의 수를 세어서 SIZE의 개수보다 크고나 같으면 true를 그렇지 않으면 false를 반환한다
 		 */
 		// 1. 이중 반복문을 이용해서 배열 bArr의 값을 체크한다.
+		// 1.1. 가로줄의 0개수 세기 및 빙고 체크
+		for (int i = 0; i < SIZE; i++) {
+			// 가로줄의 0의 갯수를 세서 5개가 된다면 빙고 1개를 올려준다.
+			for (int j = 0; j < SIZE; j++) {
+				if (bArr[i][j]) garoCnt++;
+			} if (garoCnt == 5) bingoCnt++;
+			garoCnt = 0;
+		}
+		// 1.2. 세로줄의 0개수 세기 및 빙고체크
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				
-			}
+				if (bArr[j][i]) seroCnt++;
+			} if (seroCnt == 5) bingoCnt++;
+			seroCnt = 0;
 		}
 		
-		return false;
+		// 1.3 대각선의 0개수 세기 및 빙고체크
+		// 1.3.1 대각선 0개수 체크
+		for (int i = 0; i < SIZE; i++) {
+			if (bArr[i][i]) crossCnt1++;
+		} if (crossCnt1 == 5) bingoCnt++;
+		
+		// 1.3.2. 역대각선 0개수 체크
+		for (int i = 0; i < SIZE; i++) {
+			if (bArr[i][SIZE-i]) crossCnt2++;
+		} if (crossCnt2 == 5) bingoCnt++;
+		
+		
+		return bingoCnt == 5;
 	}
 	
 	public static void main(String[] args) {
