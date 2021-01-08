@@ -77,6 +77,7 @@ public class BingoEx1 extends Frame {
 			} if (garoCnt == 5) bingoCnt++;
 			garoCnt = 0;
 		}
+		
 		// 1.2. 세로줄의 0개수 세기 및 빙고체크
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -124,6 +125,15 @@ public class BingoEx1 extends Frame {
 			 *  3. 배열 bArr을 콘솔에 출력한다.(BingoEx1클래스의 print() 사용)
 			 *  4. checkBingo()를 호출해서 빙고가 완성되었는지 확인하고, 완성되었으면 콘솔에 "Bingo~!!!"라고 출력한다.
 			 */
+			 // 1. 반복문을 통해, 버튼 배열 btnArr에서 btn(눌러진 버튼)과 같은 것을 찾는다.
+			 // 1.1. 찾으면, btnArr에서 btn을 찾은 위치(index)에 대응하는 bArr의 값을 확인한다.
+			 // (btnArr은 일차원 배열이고, bArr은 2차원 배열이므로 이 두 배열간의 관계를 잘 고려해야 한다.)
+			 // 1.1.1 bArr의 값이 true이면 "이미 누른 버튼입니다."라고 콘솔에 출력
+			 // 1.1.2 bArr의 값이 false이면, true로 바꿔서 저장한다.
+			 // 1.2. btnArr에서 btn을 찾아서 작업을 마쳤으므로 반복문을 빠져나간다.
+			
+			 // I would WIP(at least until this weekend) 
+			
 		}
 		
 		@Override
